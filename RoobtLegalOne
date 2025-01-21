@@ -40,18 +40,6 @@ def login(navejgar, user, password):
     except:
         print("Erro ao fazer o login")
 
-def fechar_pop_up(navejgar):
-    try:
-        elements = navejgar.find_elements(By.CLASS_NAME, "wm-visual-design-button")
-        if len(elements) >= 2:
-            icon_close = elements[1]
-            navejgar.execute_script("arguments[0].click();", icon_close)
-        else:
-            print("Menos de dois elementos encontrados com essa classe")
-        time.sleep(8)
-    except Exception as e:
-        print(f"Erro ao tentar fechar pop-up: {str(e)}")
-
 def preencher_campos_areceber(navejgar, plan):
     try:
         # Preencher proprietário
@@ -72,9 +60,7 @@ def main():
         print('fazendo o login')
         login(navejgar, user,  password)
         time.sleep(5)
-        fechar_pop_up(navejgar)
-        for row in plan.iter_rows(min_row=2, values_only=True):
-            preencher_campos_areceber(navejgar, plan)
+        preencher_campos_areceber(navejgar, plan)
     finally:
         navejgar.quit()
 
