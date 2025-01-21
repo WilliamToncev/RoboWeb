@@ -55,15 +55,9 @@ def fechar_pop_up(navejgar):
 def preencher_campos_areceber(navejgar, plan):
     try:
         # Preencher proprietário
-        prop = WebDriverWait(navejgar, 10).until(EC.element_to_be_clickable((By.ID, 'ProprietarioText')))
-        prop.clear()
-        prop.send_keys(plan['A2'].value + Keys.ENTER)
-        try:
-            popup_ok = WebDriverWait(navejgar, 10).until(EC.element_to_be_clickable((By.ID, 'popup_ok')))
-            popup_ok.click()
-        except:
-            pass  
-
+        proprietario = WebDriverWait(navejgar, 10).until(EC.element_to_be_clickable((By.ID, 'ProprietarioText')))
+        proprietario.clear()
+        proprietario.send_keys(plan['A2'].value + Keys.ENTER)
     except Exception as e:
         print(f"Erro ao inserir as informações: {e}")       
 
