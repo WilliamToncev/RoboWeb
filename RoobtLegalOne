@@ -24,7 +24,7 @@ chrome_options.add_argument("--headless")
 
 def login(navejgar, user, password):
     try:
-        WebDriverWait(navejgar, 10).until(EC.element_to_be_clickable((By.ID, 'Username')))
+        WebDriverWait(navejgar, 5).until(EC.element_to_be_clickable((By.ID, 'Username')))
         inpulogin = navejgar.find_element(By.ID, 'Username')
         inpulogin.clear()
         inpulogin.send_keys(user)
@@ -40,16 +40,6 @@ def login(navejgar, user, password):
     except:
         print("Erro ao fazer o login")
 
-def remover_linha():
-    linha = 2
-    aba_feito = planilha['feito']
-    proxima_linha = aba_feito.max_row + 1
-    for cell in plan[linha]:
-        aba_feito[cell.column_letter + str(proxima_linha)] = cell.value
-
-    plan.delete_rows(linha)
-    planilha.save('A RECEBER 1.xlsx')
-
 def fechar_pop_up(navejgar):
     try:
         elements = navejgar.find_elements(By.CLASS_NAME, "wm-visual-design-button")
@@ -62,68 +52,21 @@ def fechar_pop_up(navejgar):
     except Exception as e:
         print(f"Erro ao tentar fechar pop-up: {str(e)}")
 
-def preencher_campos_AReceber(navejgar, plan ):
-    try: 
-        prop = WebDriverWait(navejgar, 20).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="ProprietarioText"]')))
+def preencher_campos_areceber(navejgar, plan):
+    try:
+        # Preencher proprietário
+        prop = WebDriverWait(navejgar, 10).until(EC.element_to_be_clickable((By.ID, 'ProprietarioText')))
         prop.clear()
         prop.send_keys(plan['A2'].value + Keys.ENTER)
-        
-        prop = WebDriverWait(navejgar, 5).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="DevedorText"]')))
-        prop.clear()
-        prop.send_keys(plan['B2'].value + Keys.ENTER)
+        try:
+            popup_ok = WebDriverWait(navejgar, 10).until(EC.element_to_be_clickable((By.ID, 'popup_ok')))
+            popup_ok.click()
+        except:
+            pass  
 
-        prop = WebDriverWait(navejgar, 5).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="Descricao"]'))) 
-        prop.clear()
-        prop.send_keys(plan['C2'].value + Keys.ENTER)
+    except Exception as e:
+        print(f"Erro ao inserir as informações: {e}")       
 
-        prop = WebDriverWait(navejgar, 5).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="EmissãoText"]')))
-        prop.clear()
-        prop.send_keys(plan['D2'].value + Keys.ENTER)
-
-        prop = WebDriverWait(navejgar, 5).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="VencimentoText"]')))
-        prop.clear()
-        prop.send_keys(plan['F2'].value + Keys.ENTER)
-        
-        prop = WebDriverWait(navejgar, 5).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="Nº da parcelaText"]')))
-        prop.clear()
-        prop.send_keys(plan['E2'].value + Keys.ENTER)
-
-        prop = WebDriverWait(navejgar, 5).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="Valor brutoText"]')))
-        prop.clear()
-        prop.send_keys(plan['G2'].value + Keys.ENTER)
-
-        prop = WebDriverWait(navejgar, 5).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="Plano de contasText"]')))
-        prop.clear()
-        prop.send_keys(plan['J2'].value + Keys.ENTER)
-
-        prop = WebDriverWait(navejgar, 5).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="Centro de custoText"]')))
-        prop.clear()
-        prop.send_keys(plan['K2'].value + Keys.ENTER)
-
-        prop = WebDriverWait(navejgar, 5).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="Valor AR (a realizar)Text"]')))
-        prop.clear()
-        prop.send_keys(plan['H2'].value + Keys.ENTER)
-
-        prop = WebDriverWait(navejgar, 5).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="Conta correnteText"]')))
-        prop.clear()
-        prop.send_keys(plan['L2'].value + Keys.ENTER)
-
-        prop = WebDriverWait(navejgar, 5).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="Forma de pagamentoText"]')))
-        prop.clear()
-        prop.send_keys(plan['M2'].value + Keys.ENTER)
-
-        prop = WebDriverWait(navejgar, 5).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="Recebido emText"]')))
-        prop.clear()
-        prop.send_keys(plan['N2'].value + Keys.ENTER)
-
-        prop = WebDriverWait(navejgar, 5).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="Realizado emText"]')))
-        prop.clear()
-        prop.send_keys(plan['O2'].value + Keys.ENTER)   
-
-        remover_linha()
-    except:
-        print('Erro ao inserir as informações')
-        
 def main():
     navejgar = webdriver.Chrome()
     navejgar.get("https://arantesarimura.novajus.com.br/financeiro/obrigacoesareceber/create?returnUrl=%2Ffinanceiro%2Fobrigacoes%2FSearch")
@@ -134,12 +77,12 @@ def main():
     try: 
         print('fazendo o login')
         login(navejgar, user,  password)
-        time.sleep(15)
+        time.sleep(5)
         fechar_pop_up(navejgar)
         for row in plan.iter_rows(min_row=2, values_only=True):
-            preencher_campos_AReceber(navejgar, plan)
+            preencher_campos_areceber(navejgar, plan)
     finally:
         navejgar.quit()
 
 if __name__ == "__main__":
-    main()        
+    main()         
