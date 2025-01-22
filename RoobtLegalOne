@@ -53,8 +53,8 @@ def main():
     navejgar = webdriver.Chrome()
     navejgar.get("https://arantesarimura.novajus.com.br/financeiro/obrigacoesareceber/create?returnUrl=%2Ffinanceiro%2Fobrigacoes%2FSearch")
 
-    user = 'FelipeArcanjo'
-    password = 'Genter24@'
+    user = 'Login'
+    password = 'Senha'
 
     try: 
         print('fazendo o login')
