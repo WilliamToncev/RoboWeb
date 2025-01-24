@@ -10,6 +10,7 @@ Formatação de Dados: Trata datas e valores monetários antes de enviar para o 
 Execução Headless: Suporte para execução do navegador sem interface gráfica.
 
 📂 Estrutura do Projeto
+
 .
 ├── main.py            # Código principal da aplicação
 
