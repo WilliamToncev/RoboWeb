@@ -13,11 +13,8 @@ Execução Headless: Suporte para execução do navegador sem interface gráfica
 
 .
 ├── main.py            # Código principal da aplicação
-
 ├── A RECEBER 1.xlsx   # Planilha de entrada (opcional)
-
 ├── TRANSFERENCIA 1.xlsx # Planilha de entrada com os dados a serem enviados
-
 └── README.md          # Documentação do projeto
 
 🔧 Tecnologias Utilizadas
