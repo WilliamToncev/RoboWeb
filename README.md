@@ -1,4 +1,5 @@
 Automação com Selenium e Preenchimento de Formulários
+
 Este projeto é uma aplicação em Python que automatiza o preenchimento de formulários em um site utilizando dados provenientes de planilhas Excel. A automação é feita com a biblioteca Selenium, enquanto os dados são manipulados com OpenPyXL e Datetime.
 
 📋 Funcionalidades
