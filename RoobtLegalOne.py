@@ -147,7 +147,7 @@ def preencher_campos_areceber(navejgar, plan):
         
 def main():
     navejgar = webdriver.Chrome()
-    navejgar.get("https://arantesarimura.novajus.com.br/financeiro/obrigacoesareceber/create?returnUrl=%2Ffinanceiro%2Fobrigacoes%2FSearch")
+    navejgar.get("SEU_SITE_AQUI")
 
     user = 'Usuario'
     password = 'Login'
